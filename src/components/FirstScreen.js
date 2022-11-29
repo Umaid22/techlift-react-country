@@ -6,7 +6,7 @@ import {Link} from "react-router-dom"
 const FirstScreen = (props) => {
     const [countryName, setCountryName] = useState("")
     // const [first, setfirst] = useState(second)
-    const [countryData, setCountryData] = useState([])
+    const [countryDataComponenet, setCountryDataComponenet] = useState([])
     const [viewCountryName, setViewCountryName] = useState("")
     // console.log("from props", props.countryData);
     // setCountryData(props.countryData);
@@ -17,7 +17,7 @@ const FirstScreen = (props) => {
     }
 
     useEffect(()=> {
-        setCountryData(props.countryData)
+        setCountryDataComponenet(props.countryData)
         setViewCountryName("")
         // console.log("from useState", countryData);
         
@@ -67,7 +67,7 @@ const FirstScreen = (props) => {
         //     // console.log("please enter the country name to proceed");
         // }
 
-        setCountryData(props.countryData) 
+        setCountryDataComponenet(props.countryData) 
         // console.log("from useState", countryData);
     }
     // console.log("outside setch", countryDataArray);
@@ -75,6 +75,10 @@ const FirstScreen = (props) => {
     const countryDetails = (name)=>{
         // console.log("country details", name);
         props.viewCountryName(name)
+
+
+
+        // console.log(name);
         // console.log(countryData[ind].flag);
     }
 
@@ -104,7 +108,7 @@ const FirstScreen = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                        {countryData.length!==0 && countryData.map((ele, ind)=>{
+                        {countryDataComponenet.length!==0 && countryDataComponenet.map((ele, ind)=>{
                             return(
                             <tr id={ind} key={ind}> 
                                 <th scope="row">{ind + 1}</th>

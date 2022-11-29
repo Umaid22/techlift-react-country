@@ -12,24 +12,26 @@ const ViewScreen = (props) => {
 
 
     // const {name} = props.countryData[0];
-    const [countryData, setCountryData] = useState([])
+    const [countrySelectedData, setCountrySelectedData] = useState([])
     useEffect(() => {
 
-        setCountryData(props.countryData);
+        setCountrySelectedData([props.countryData]);
 
-    }, [])
+    }, [props.countryData])
+    // console.log("proooops", props.countryData);
 
     // console.log("in thte view screen, it is receiving props",props.countryData);
-    console.log("in the view screen, it is useSatate", countryData.name);
+    // console.log("received signle country data, in view screen ", countrySelectedData);
     // console.log("from view screen", name);
   return (
     <React.Fragment>
          <div className='container border border-danger'>
-            hy this is view screen
+            
             {/* {console.log(countryData)} */}
-            {/* { countryData.length!==0 && countryData.map((ele, ind)=>{ */}
-                {/* return( */}
-                    {/* <Card style={{ width: '18rem'}} key={ind}>
+            { countrySelectedData.length!==0 && countrySelectedData.map((ele, ind)=>{
+                // console.log("these are languages in view screen",ele.languages);
+                return(
+                    <Card style={{ width: '18rem'}} key={ind}>
                         <img src={ele.flag} alt="Country Flag"  />
                         <CardBody>
                             <CardText><strong>Country Name : </strong>{ele.officialName}</CardText>
@@ -37,11 +39,16 @@ const ViewScreen = (props) => {
                             <CardText><strong>Region : </strong>{ele.region}</CardText>
                             <CardText><strong>Subregion : </strong>{ele.subregion}</CardText>
                             <CardText><strong>Map of {ele.name} : </strong><a href={ele.location} target='_blank' rel='noreferrer'>Click here to navigate</a></CardText>
-                            <CardText><strong>Languages : </strong>{ele.languages}<LangModal details={countryData[ind]}/></CardText>
+                            <CardText><strong>Languages : </strong> 
+                            { String(ele.languages)}
+
+                            <LangModal countryData={ele}/>
+                            
+                            </CardText>
                         </CardBody>
-                    </Card> */}
-                {/* ) */}
-            {/* })} */}
+                    </Card>
+                )
+            })}
         </div>
     </React.Fragment>
   )

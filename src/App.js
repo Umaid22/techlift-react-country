@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,29 +13,34 @@ function App() {
 
   const [countryData, setCountryData] = useState([])
   const [viewCountry, setViewCountry] = useState("")
-  const [singleCountry, setSingleCountry] = useState({})
+  const [singleCountry, setSingleCountry] = useState([])
   
   const getData = (data)=>{
     countryData.push(data); 
     // console.log("comming from child to app.js", countryData);
   }
   const viewCountryName = (data)=>{
-    setViewCountry(data)
     // console.log("name111 receive in parent from the button clicked",data);
+    setViewCountry(data);
     
   }
-  console.log("this is useState in app.js " , viewCountry);
+  // console.log("this is country clicked in app.js " , viewCountry);
   // console.log("check in app.js", countryData);
-  countryData.filter((ele)=>{
-    let compare = ele.name === viewCountry;
-    if (compare === true) {
-      // console.log(ele);
-      setSingleCountry(ele);
-      
-    }
-  })
 
-  console.log("single country from app.js" , singleCountry);
+  useEffect(() => {
+
+    countryData.filter((ele)=>{
+      let compare = ele.name === viewCountry;
+      if (compare === true) {
+        // console.log(ele);
+        setSingleCountry(ele);
+        
+      }
+    })
+  }, [viewCountryName])
+  
+
+  // console.log("single country from app.js" , singleCountry);
 
   
   return (
@@ -44,6 +49,7 @@ function App() {
         <MyNavbar/>
         <Routes>
           <Route path='/' element={<FirstScreen details={getData} countryData={countryData} viewCountryName={viewCountryName}/>}/>
+
           <Route path='/details' element={<ViewScreen countryData={singleCountry}/>}/>
           {/*     -----check it --->>>>      /:name */}
         </Routes>
