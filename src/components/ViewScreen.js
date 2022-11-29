@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import LangModal from './LangModal'
-import {useParams} from "react-router-dom"
+// import {useParams} from "react-router-dom"
 
-import { Button, Card, CardBody, CardText, Form, FormGroup, Input, Label, Table } from 'reactstrap'
+import { Card, CardBody, CardText } from 'reactstrap'
 
 const ViewScreen = (props) => {
     // console.log("props from view screen", props.countryData);
@@ -25,7 +25,7 @@ const ViewScreen = (props) => {
     // console.log("from view screen", name);
   return (
     <React.Fragment>
-         <div className='container border border-danger'>
+         <div className='container border border-dark p-4 d-flex align-item-center justify-content-center rounded bg-success'>
             
             {/* {console.log(countryData)} */}
             { countrySelectedData.length!==0 && countrySelectedData.map((ele, ind)=>{

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap';
 
 const LangModal = ({countryData}) => {
 
@@ -8,19 +8,22 @@ const LangModal = ({countryData}) => {
   const [singleCountryData, setSingleCountryData] = useState([])
   const [newLanguage, setNewLanguage] = useState("")
   const [languagesArray, setLanguagesArray] = useState([])
+  const [addErrorButton, setaddErrorButton] = useState("none")
 
 
     useEffect( () => {
       countryData.length!==0 && setSingleCountryData([countryData]);
+      setLanguagesArray(countryData.languages)
     }, [countryData])
 
-    useEffect(() => {
-      singleCountryData.length!==0 && setLanguagesArray(singleCountryData.languages)
-    }, [singleCountryData])
+
+    // useEffect(() => {
+    //   singleCountryData.length!==0 && setLanguagesArray([singleCountryData.languages])
+    // }, [singleCountryData])
 
 
-    console.log("in the modal country data", singleCountryData);
-    console.log("check languages array", languagesArray);
+    // console.log("in the modal country data", singleCountryData);
+    // console.log("check languages array", languagesArray);
 
     const onchange = (e)=>{
       // console.log(e.target.value);
@@ -28,17 +31,34 @@ const LangModal = ({countryData}) => {
       // console.log(newLanguage);
     }
     const addLanguage = ()=>{
-    //  console.log(newLanguage);
+      if(newLanguage.length > 1){
+        languagesArray.push(newLanguage)
+        setaddErrorButton("none")
+        setNewLanguage("")
+      }else{
+        setaddErrorButton("block")
+        setTimeout(() => {
+          setaddErrorButton("none")
+        }, 3000); 
+      }
+     console.log(newLanguage);
     //  console.log(languagesArray);
-    //   let newArray = languagesArray.push(newLanguage)
     //  setLanguagesArray(newArray)
+     console.log("updated languages array",languagesArray);
+    }
+  
+
+    const deleteFromArray = (ind)=>{
+      console.log(ind);
+      languagesArray.splice(ind,1);
+      console.log(languagesArray);
+      // setLanguagesArray(languagesArray)
     }
 
     const updateLang = ()=>{
      console.log("updat lang");   
     //  setLang()
     }
-
 
     const toggle = () => setModal(!modal);
     const closeBtn = (
@@ -47,6 +67,7 @@ const LangModal = ({countryData}) => {
       </button>
     );
 
+    
   return (
     <React.Fragment>
         
@@ -68,18 +89,22 @@ const LangModal = ({countryData}) => {
 {/* ----------------------------------- */}
 
               <ModalBody>
-              {languagesArray?.map((item, ind)=>{
-                // console.log("from map in modal",item);
+              {languagesArray.map((item, ind)=>{
+                console.log("languages array map in modal",item);
                 return(
-                    <div key={ind}>{item} <Button color="danger" outline>X</Button></div>
+                  <div className='bg-info m-2 p-1'>
+                    <span className='m-2 p-3 ' key={ind}>{ind + 1} :<strong> {item}</strong></span> 
+                    <Button onClick={()=>deleteFromArray(ind)} className='ms-4' color="danger" outline>X</Button>
+                    </div>
                   )
               })}
               <div>
-                <FormGroup>
+                <FormGroup className='m-4'>
                   <Label for="name">Enter Country Name : </Label>
                   <Input onChange={onchange} placeholder='Add new language' type='text'/>
                 </FormGroup>
-                <Button color="success" onClick={addLanguage}>Add Language</Button>
+                <p className={`text-danger ms-4 d-${addErrorButton}`} id='buttonDanger'>Please enter valid name</p>
+                <Button className='ms-4' color="success" onClick={addLanguage}>Add Language</Button>
               </div>
               </ModalBody>
 {/* ----------------------------------- */}
